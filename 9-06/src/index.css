@@ -1,0 +1,137 @@
+/* =====================================================
+   VoltTec — Estilos Globales
+   ===================================================== */
+
+:root {
+  --voltec-amarillo: #f5c518;
+  --voltec-amarillo-oscuro: #d4a800;
+  --voltec-negro: #0f1117;
+  --voltec-gris-oscuro: #1a1e2e;
+  --voltec-gris-medio: #2c3147;
+  --voltec-texto-claro: #f0f2f8;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #1a1e2e;
+}
+
+/* ----- NAVBAR ----- */
+.navbar-transparente {
+  background: rgba(15, 17, 23, 0.3);
+  backdrop-filter: blur(4px);
+}
+
+.navbar-scrolled {
+  background: var(--voltec-negro) !important;
+}
+
+.transition-all {
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo-icono { font-size: 1.6rem; line-height: 1; }
+.logo-texto { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; }
+.logo-principal { color: var(--voltec-amarillo); }
+.logo-secundario { color: #ffffff; }
+
+.nav-link-custom {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem !important;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+.nav-link-custom:hover {
+  color: var(--voltec-amarillo) !important;
+  background: rgba(245, 197, 24, 0.1);
+}
+
+.toggler-icono { color: white; font-size: 1.4rem; }
+
+/* ----- BOTÓN DE MARCA ----- */
+.btn-voltec {
+  background: var(--voltec-amarillo);
+  color: var(--voltec-negro);
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-voltec:hover {
+  background: var(--voltec-amarillo-oscuro);
+  color: var(--voltec-negro);
+  transform: translateY(-1px);
+}
+
+/* ----- HERO ----- */
+.header-hero {
+  background: linear-gradient(135deg, #0a0d16 0%, #1a1e2e 40%, #0f2040 100%);
+  position: relative;
+  overflow: hidden;
+}
+.header-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(245,197,24,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(245,197,24,0.05) 0%, transparent 40%);
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f5c518' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(245,197,24,0.15);
+  border: 1px solid rgba(245,197,24,0.3);
+  color: var(--voltec-amarillo);
+  padding: 0.35rem 1rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.hero-titulo { line-height: 1.1; letter-spacing: -1px; }
+.hero-titulo-acento { color: var(--voltec-amarillo); }
+.hero-descripcion { color: rgba(255,255,255,0.75); max-width: 550px; line-height: 1.7; }
+
+.stat-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+}
+.stat-numero { font-size: 1.6rem; font-weight: 800; color: var(--voltec-amarillo); line-height: 1; }
+.stat-etiqueta { font-size: 0.7rem; color: rgba(255,255,255,0.6); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ----- TÍTULOS DE SECCIÓN ----- */
+.section-titulo {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  position: relative;
+  display: inline-block;
+}
+.section-titulo::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: var(--voltec-amarillo);
+  border-radius: 2px;
+  margin: 0.5rem auto 0;
+}
+.section-subtitulo { font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+/* ----- FOOTER ----- */
+.footer-principal { background: var(--voltec-negro); }
+.footer-titulo { color: var(--voltec-amarillo); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; }
+.footer-link { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+.footer-link:hover { color: var(--voltec-amarillo); }
+.footer-bottom { background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.06); }

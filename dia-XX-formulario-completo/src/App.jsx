@@ -1,122 +1,116 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useEffect, useState } from 'react';
+import './App.css';
+
+const tareasIniciales = [
+  { id: 1, texto: 'Aprender React', categoria: 'estudio', completada: false },
+  { id: 2, texto: 'Hacer ejercicio', categoria: 'salud', completada: true },
+  { id: 3, texto: 'Leer un libro', categoria: 'ocio', completada: false },
+  { id: 4, texto: 'Practicar debugging', completada: false },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [tareas, setTareas] = useState(tareasIniciales);
+  const [filtro, setFiltro] = useState('todas');
+  const [contador, setContador] = useState(0);
+
+  // BUG 2: falta el arreglo de dependencias.
+  useEffect(() => {
+    console.log('Renderizando App, contador:', contador);
+    setContador(contador + 1);
+  });
+
+  const tareasFiltradas = tareas.filter((tarea) => {
+    if (filtro === 'todas') return true;
+    // BUG 3: se compara un booleano con strings.
+    if (filtro === 'completadas') return tarea.completada === 'true';
+    if (filtro === 'pendientes') return tarea.completada === 'false';
+    return true;
+  });
+
+  function agregarTarea(texto) {
+    if (!texto.trim()) return;
+    // BUG 4: se muta el arreglo original.
+    tareas.push({ id: Date.now(), texto, categoria: 'general', completada: false });
+    setTareas(tareas);
+  }
+
+  function completarTarea(id) {
+    const nuevasTareas = tareas.map((tarea) =>
+      tarea.id === id ? { ...tarea, completada: true } : tarea
+    );
+    setTareas(nuevasTareas);
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <main className="app">
+      <p className="eyebrow">Taller de debugging en React</p>
+      <h1>Mis tareas</h1>
+      <p className="intro">Observa la consola, formula una hipótesis y prueba cada corrección.</p>
 
-      <div className="ticks"></div>
+      <div className="filtros" role="group" aria-label="Filtrar tareas">
+        <button onClick={() => setFiltro('todas')}>Todas</button>
+        <button onClick={() => setFiltro('pendientes')}>Pendientes</button>
+        <button onClick={() => setFiltro('completadas')}>Completadas</button>
+      </div>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      <ul className="lista-tareas">
+        {tareasFiltradas.map((tarea) => (
+          <li key={tarea.id} className={tarea.completada ? 'completada' : ''}>
+            <span>{tarea.texto}</span>
+            {/* BUG 1: la tarea 4 no tiene categoria. */}
+            <span className="categoria">{tarea.categoria.toUpperCase()}</span>
+            <button className="check" onClick={() => completarTarea(tarea.id)} aria-label={`Completar ${tarea.texto}`}>
+              ✔
+            </button>
+          </li>
+        ))}
+      </ul>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <AgregarTarea onAgregar={agregarTarea} />
+      <PerfilUsuario />
+    </main>
+  );
 }
 
-export default App
+function AgregarTarea({ onAgregar }) {
+  const [texto, setTexto] = useState('');
+
+  function manejarEnvio(e) {
+    e.preventDefault();
+    onAgregar(texto);
+    setTexto('');
+  }
+
+  return (
+    <form onSubmit={manejarEnvio} className="form-agregar">
+      <input value={texto} onChange={(e) => setTexto(e.target.value)} placeholder="Nueva tarea" />
+      <button type="submit">Agregar</button>
+    </form>
+  );
+}
+
+function PerfilUsuario() {
+  const [usuario, setUsuario] = useState(null);
+
+  useEffect(() => {
+    obtenerUsuario();
+  }, []);
+
+  function obtenerUsuario() {
+    const exito = Math.random() > 0.5;
+
+    setTimeout(() => {
+      if (exito) {
+        setUsuario({ nombre: 'Estudiante React' });
+      } else {
+        // BUG 5: el error asíncrono no se captura.
+        throw new Error('No se pudo cargar el usuario');
+      }
+    }, 1000);
+  }
+
+  if (!usuario) return <p className="perfil">Cargando perfil...</p>;
+  return <p className="perfil">Perfil: {usuario.nombre}</p>;
+}
+
+export default App;

@@ -20,6 +20,38 @@ body {
   color: #1a1e2e;
 }
 
+html[data-theme='dark'] body {
+  background-color: #171a20;
+  color: #f0f2f8;
+}
+
+html[data-theme='dark'] .bg-light,
+html[data-theme='dark'] .bg-white {
+  background-color: #222731 !important;
+  color: #f0f2f8 !important;
+}
+
+.selector-tema {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 1100;
+  min-height: 44px;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid #f5c518;
+  border-radius: 6px;
+  background: #0f1117;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.selector-tema:focus-visible {
+  outline: 3px solid #176b87;
+  outline-offset: 3px;
+}
+
 /* ----- NAVBAR ----- */
 .navbar-transparente {
   background: rgba(15, 17, 23, 0.3);

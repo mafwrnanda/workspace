@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 function Contacto() {
   const [enviado, setEnviado] = useState(false);
   const [form, setForm] = useState({
@@ -144,3 +146,5 @@ function Contacto() {
     </section>
   );
 }
+
+export default Contacto;

@@ -76,3 +76,5 @@ function SobreNosotros() {
     </section>
   );
 }
+
+export default SobreNosotros;

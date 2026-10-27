@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Login from './Login'
+import Productos from './Productos'
 import { supabase } from './supabaseClient'
 import './App.css'
 
@@ -68,18 +69,24 @@ function App() {
   }
 
   return (
-    <main className="welcome-layout">
-      <div className="welcome-card">
-        <div className="success-icon" aria-hidden="true">✓</div>
-        <p className="eyebrow">SESIÓN ACTIVA</p>
-        <h1>Qué bueno verte.</h1>
-        <p className="welcome-copy">
-          Has iniciado sesión con <strong>{session.user.email}</strong>.
-        </p>
-        <button className="secondary-button" type="button" onClick={handleLogout}>
-          Cerrar sesión <span aria-hidden="true">↗</span>
-        </button>
-      </div>
+    <main className="authenticated-layout">
+      <header className="app-header">
+        <div className="app-brand">
+          <span className="brand-mark small" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span>Mi catálogo</span>
+        </div>
+        <div className="account-actions">
+          <span className="account-email">{session.user.email}</span>
+          <button className="logout-button" type="button" onClick={handleLogout}>
+            Cerrar sesión
+          </button>
+        </div>
+      </header>
+      <Productos session={session} />
     </main>
   )
 }

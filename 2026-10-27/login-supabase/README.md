@@ -1,11 +1,12 @@
-# Login con Supabase + React
+# Login y CRUD de productos con Supabase + React
 
-Práctica del 27 de octubre de 2026: formulario de registro e inicio de sesión conectado a Supabase Auth.
+Práctica del 27 de octubre de 2026: autenticación y catálogo privado de productos con React, Vite y Supabase.
 
 ## Requisitos
 
 - Node.js 20 o superior.
 - Un proyecto activo en Supabase con el proveedor **Email** habilitado.
+- La migración `create_productos_crud` aplicada en el proyecto Supabase.
 
 ## Configuración local
 
@@ -29,7 +30,21 @@ npm install
 npm run dev -- --host
 ```
 
-Abre la URL que muestre Vite. La pantalla permite cambiar entre **Iniciar sesión** y **Crear cuenta**; después de entrar se muestra el correo de la sesión activa y el botón **Cerrar sesión**.
+Abre la URL que muestre Vite. La pantalla permite cambiar entre **Iniciar sesión** y **Crear cuenta**. Después de autenticarte aparece el catálogo privado, donde puedes crear, consultar, editar y eliminar tus productos.
+
+## Base de datos y seguridad
+
+La tabla `public.productos` se creó con estas columnas: `id`, `user_id`, `nombre`, `descripcion`, `precio` y `created_at`. Tiene una referencia a `auth.users`, un índice por `user_id` y Row Level Security activado.
+
+Las cuatro políticas RLS garantizan que un usuario solo pueda consultar, crear, actualizar o eliminar filas cuyo `user_id` coincida con su sesión. La aplicación también filtra por `user_id` en las lecturas, actualizaciones y eliminaciones como defensa adicional.
+
+La migración aplicada es:
+
+```text
+create_productos_crud
+```
+
+Su definición queda versionada en `supabase/migrations/20261027192657_create_productos_crud.sql`.
 
 ## Validar
 
@@ -37,5 +52,7 @@ Abre la URL que muestre Vite. La pantalla permite cambiar entre **Iniciar sesió
 npm run lint
 npm run build
 ```
+
+Prueba el flujo con un usuario autenticado: crea un producto, edítalo, actualiza la lista y elimínalo. Para comprobar RLS completamente, utiliza dos usuarios distintos y verifica que cada uno solo vea sus propios registros.
 
 No se versiona `.env`; solo `.env.example` forma parte del repositorio.

@@ -1,0 +1,14 @@
+# Dependencias y compilación
+node_modules
+dist
+
+# Variables de entorno: nunca versionar secretos locales
+.env
+.env.*
+!.env.example
+
+# Archivos del editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
